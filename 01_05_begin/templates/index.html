@@ -73,16 +73,6 @@
     <form id="tts-form">
         <label for="text">Text:</label>
         <textarea id="text" name="text" rows="4" cols="50"></textarea>
-        <label for="voice">Voice:</label>
-        <select id="voice" name="voice">
-            <option value="alloy">Alloy</option>
-            <option value="echo">Echo</option>
-            <option value="fable">Fable</option>
-            <option value="onyx">Onyx</option>
-            <option value="nova">Nova</option>
-            <option value="shimmer">Shimmer</option>
-        </select>
-    
         <input type="submit" value="Speak">
     </form>
 
@@ -93,7 +83,6 @@
             event.preventDefault();
     
             const text = document.getElementById('text').value;
-            const voice = document.getElementById('voice').value;
             const audioElement = document.getElementById('audio');
     
             fetch('/tts', {
@@ -101,7 +90,7 @@
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ text, voice })
+                body: JSON.stringify({ text: text })
             })
             .then(response => response.blob())
             .then(blob => {

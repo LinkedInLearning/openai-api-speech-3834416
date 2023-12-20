@@ -15,7 +15,7 @@ def index():
 @app.route("/tts", methods=["POST"])
 def tts():
     data = request.get_json()
-    text = data.get("text", "")  # Use '' as the default text
+    text = data.get("text", "")
     response = client.audio.speech.create(
         model="tts-1",
         voice="alloy",

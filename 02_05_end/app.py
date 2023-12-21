@@ -19,14 +19,15 @@ def index():
 
 @app.route("/transcribe", methods=["POST"])
 def transcribe_audio():
-    if "file" not in request.files:
-        return "No file part in the request", 400
-    file = request.files["file"]
+    if not "file" in request.files:
+        return "No file part in request.", 400
+    file = request.files["file"] 
     file_like = BytesIO(file.read())
     file_like.name = file.filename
     transcript = client.audio.transcriptions.create(
-        model="whisper-1", file=file_like, response_format="text"
+        model="whisper-1", file=file_like, response_format="text",
     )
+    
     return transcript
 
 

@@ -18,7 +18,7 @@ def index():
 
 
 @app.route("/transcribe", methods=["POST"])
-def transcribe_audio():   
+def transcribe_audio():  
     transcript = "Place holder"
     
     return transcript

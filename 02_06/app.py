@@ -25,8 +25,10 @@ def transcribe_audio():
     file_like = BytesIO(file.read())
     file_like.name = file.filename
     print(file_like.name)
+
     transcript = client.audio.translations.create(
-        model="whisper-1", file=file_like,
+        model="whisper-1", 
+        file=file_like,
     )
     return transcript.text
 

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Text-to-Speech Client</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        h1 {
+            color: #333;
+        }
+        #tts-form {
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px 0px rgba(0,0,0,0.1);
+            width: 80%;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+        }
+        #text {
+            width: 100%;
+            padding: 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            box-sizing: border-box;
+            margin-bottom: 10px;
+        }
+        #tts-form input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            width: 100%;
+        }
+        #tts-form input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        #audio {
+            width: 100%;
+            margin-top: 20px;
+        }
+    
+        @media (min-width: 1024px) {
+            #tts-form {
+                flex-direction: row;
+                justify-content: space-between;
+            }
+            #text, #tts-form input[type="submit"] {
+                width: 45%;
+            }
+        }
+        label, textarea, select, input[type="submit"] {
+            display: block;
+            margin-bottom: 1em;
+        }
+    </style>
+</head>
+<body>
+    <h1>Text-to-Speech Client</h1>
+
+    <form id="tts-form">
+        <label for="text">Text:</label>
+        <textarea id="text" name="text" rows="4" cols="50"></textarea>
+        <input type="submit" value="Speak">
+    </form>
+
+    <audio id="audio"></audio>
+
+    <script>
+        document.getElementById('tts-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+    
+            const text = document.getElementById('text').value;
+            const audioElement = document.getElementById('audio');
+    
+            fetch('/tts', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ text: text })
+            })
+            .then(response => response.blob())
+            .then(blob => {
+                const url = URL.createObjectURL(blob);
+                audioElement.src = url;
+                audioElement.play();
+            });
+        });
+    </script>
+</body>
+</html>

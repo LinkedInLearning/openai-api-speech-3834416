@@ -48,7 +48,6 @@
 
         .button-copy-text {
             background-color: #4CAF50;
-            /* Green */
             border: none;
             color: white;
             padding: 15px 32px;
@@ -64,19 +63,25 @@
         .button-copy-text:hover {
             background-color: #45a049;
         }
-        @keyframes loading {
-    0% { background-position: 100% 50%; }
-    100% { background-position: 0 50%; }
-}
 
-#waiting {
-    display: inline-block;
-    width: 100px; /* adjust as needed */
-    height: 20px; /* adjust as needed */
-    background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
-    background-size: 200% 100%;
-    animation: loading 1.5s infinite;
-}
+        @keyframes loading {
+            0% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0 50%;
+            }
+        }
+
+        #waiting {
+            display: inline-block;
+            width: 100px;
+            height: 20px;
+            background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+            background-size: 200% 100%;
+            animation: loading 1.5s infinite;
+        }
     </style>
 </head>
 
@@ -110,13 +115,11 @@
                         const audioURL = window.URL.createObjectURL(blob);
                         document.getElementById('audioPlayer').src = audioURL;
 
-                        // Upload the recorded audio to the server
                         const formData = new FormData();
                         formData.append('file', blob, 'audio.ogg');
                         fetch('/transcribe', { method: 'POST', body: formData })
                             .then(response => response.text())
                             .then(data => {
-                                // Display the response data on the webpage
                                 document.getElementById('output').textContent = data;
                                 toggleWaiting();
                             })
@@ -131,11 +134,9 @@
         function toggleWaiting() {
             const waiting = document.getElementById('waiting');
             const output = document.getElementById('output');
-            
-            // get display status of waiting element
+
             const display = window.getComputedStyle(waiting).display;
             output.textContent = display === 'none' ? '' : output.textContent;
-            // toggle display status
             waiting.style.display = display === 'none' ? 'inline-block' : 'none';
 
         }
